@@ -10,13 +10,21 @@ class DishDetail extends Component {
     renderDish(dish) {
         if (dish != null) {
             return (
-                <Card key={dish.id}>
-                    <CardImg top src={dish.image} alt={dish.name} />
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
+                <React.Fragment>
+                    <div className="col-12 col-md-5 m-1">
+                        <Card key={dish.id}>
+                            <CardImg top src={dish.image} alt={dish.name} />
+                            <CardBody>
+                                <CardTitle>{dish.name}</CardTitle>
+                                <CardText>{dish.description}</CardText>
+                            </CardBody>
+                        </Card>
+                    </div>
+                    <div className="col-12 col-md-5 m-1">
+                        {this.renderComments(dish.comments)}
+                    </div>
+
+                </React.Fragment>
             );
         } else {
             return (
@@ -25,66 +33,42 @@ class DishDetail extends Component {
         }
     }
 
-    renderComments(dish) {
-        const months = [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'
-        ]
-        if (dish != null) {
-            if (dish.comments != null) {
-                const foodComments =
-                    dish.comments.map(singlecomment => {
-                        return (
-                            <div key={singlecomment.id}>
-                                <ul className="list-unstyled">
-                                    <li>
-                                        <p>{singlecomment.comment}</p>
-                                        {console.log(singlecomment.author)}
-                                        <p>-- {singlecomment.author}, {months[new Date(singlecomment.date).getMonth()]} {new Date(singlecomment.date).getDate()}, {new Date(singlecomment.date).getFullYear()}</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        );
-                    });
+    renderComments(comments) {
 
-                return (
-                    <div>
-                        <h4>Comments</h4>
-                        {foodComments}
-                    </div>
-                )
+        if (comments != null) {
+            const foodComments =
+                comments.map(singlecomment => {
+                    return (
+                        <div key={singlecomment.id}>
+                            <ul className="list-unstyled">
+                                <li>
+                                    <p>{singlecomment.comment}</p>
+                                    {console.log(singlecomment.author)}
+                                    <p>-- {singlecomment.author}, {new Date(singlecomment.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    );
+                });
 
-            } else {
-                return (
-                    <div></div>
-                )
-            }
+            return (
+                <div>
+                    <h4>Comments</h4>
+                    {foodComments}
+                </div>
+            )
+
         } else {
             return (
                 <div></div>
             )
         }
-
     }
+
     render() {
         return (
             <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                    {this.renderDish(this.props.selectedDish)}
-                </div>
-                <div className="col-12 col-md-5 m-1">
-                    {this.renderComments(this.props.selectedDish)}
-                </div>
+                {this.renderDish(this.props.selectedDish)}
             </div>
         )
     }
