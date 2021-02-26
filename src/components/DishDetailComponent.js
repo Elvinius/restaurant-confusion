@@ -5,8 +5,6 @@ import {
 } from 'reactstrap';
 
 class DishDetail extends Component {
-
-
     renderDish(dish) {
         if (dish != null) {
             return (
@@ -67,9 +65,12 @@ class DishDetail extends Component {
 
     render() {
         return (
-            <div className="row">
-                {this.renderDish(this.props.selectedDish)}
+            <div className="container">
+                <div className="row">
+                    {this.renderDish(this.props.dish)}
+                </div>
             </div>
+
         )
     }
 }
