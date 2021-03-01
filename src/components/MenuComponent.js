@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-const RenderMenuItem = ({ dish, onClick }) => {
+const RenderMenuItem = ({ dish }) => {
     return (
         <Card>
             <Link to={`menu/${dish.id}`}>
