@@ -31,7 +31,7 @@ class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleCommentModal();
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
     }
     render() {
         const numbers = [1, 2, 3, 4, 5];
@@ -113,7 +113,7 @@ const RenderDish = (props) => {
                 </div>
                 <div className="col-12 col-md-5 m-1">
                     <RenderComments comments={props.comments}
-                        addComment={props.addComment}
+                        postComment={props.postComment}
                         dishId={props.dishId} />
                 </div>
             </React.Fragment>
@@ -125,7 +125,7 @@ const RenderDish = (props) => {
     }
 }
 
-const RenderComments = ({ comments, addComment, dishId }) => {
+const RenderComments = ({ comments, postComment, dishId }) => {
     if (comments != null) {
         const foodComments =
             comments.map(singlecomment => {
@@ -144,7 +144,7 @@ const RenderComments = ({ comments, addComment, dishId }) => {
             <div>
                 <h4>Comments</h4>
                 {foodComments}
-                <CommentForm dishId={dishId} addComment={addComment} />
+                <CommentForm dishId={dishId} postComment={postComment} />
             </div>
         )
 
@@ -154,7 +154,7 @@ const RenderComments = ({ comments, addComment, dishId }) => {
         )
     }
 }
-const DishDetail = ({ dish, comments, addComment, isLoading, isErrMessage }) => {
+const DishDetail = ({ dish, comments, postComment, isLoading, isErrMessage }) => {
     if (isLoading) {
         return (
             <div className="container">
@@ -185,7 +185,7 @@ const DishDetail = ({ dish, comments, addComment, isLoading, isErrMessage }) => 
                     </div>
                 </div>
                 <div className="row">
-                    <RenderDish dish={dish} comments={comments} addComment={addComment} dishId={dish.id} />
+                    <RenderDish dish={dish} comments={comments} postComment={postComment} dishId={dish.id} />
                 </div>
             </div>
 
