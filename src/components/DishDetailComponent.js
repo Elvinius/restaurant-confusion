@@ -28,7 +28,8 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values) {
-        alert(`The current state is: ${JSON.stringify(values)}`);
+        this.toggleCommentModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
     render() {
         const numbers = [1, 2, 3, 4, 5];
@@ -95,21 +96,23 @@ class CommentForm extends Component {
     }
 }
 
-const RenderDish = ({ dish, comments }) => {
-    if (dish != null) {
+const RenderDish = (props) => {
+    if (props.dish != null) {
         return (
             <React.Fragment>
                 <div className="col-12 col-md-5 m-1">
-                    <Card key={dish.id}>
-                        <CardImg top src={dish.image} alt={dish.name} />
+                    <Card key={props.dish.id}>
+                        <CardImg top src={props.dish.image} alt={props.dish.name} />
                         <CardBody>
-                            <CardTitle>{dish.name}</CardTitle>
-                            <CardText>{dish.description}</CardText>
+                            <CardTitle>{props.dish.name}</CardTitle>
+                            <CardText>{props.dish.description}</CardText>
                         </CardBody>
                     </Card>
                 </div>
                 <div className="col-12 col-md-5 m-1">
-                    <RenderComments comments={comments} />
+                    <RenderComments comments={props.comments}
+                        addComment={props.addComment}
+                        dishId={props.dishId} />
                 </div>
             </React.Fragment>
         );
@@ -120,7 +123,7 @@ const RenderDish = ({ dish, comments }) => {
     }
 }
 
-const RenderComments = ({ comments }) => {
+const RenderComments = ({ comments, addComment, dishId }) => {
     if (comments != null) {
         const foodComments =
             comments.map(singlecomment => {
@@ -139,7 +142,7 @@ const RenderComments = ({ comments }) => {
             <div>
                 <h4>Comments</h4>
                 {foodComments}
-                <CommentForm />
+                <CommentForm dishId={dishId} addComment={addComment} />
             </div>
         )
 
@@ -149,7 +152,7 @@ const RenderComments = ({ comments }) => {
         )
     }
 }
-const DishDetail = ({ dish, comments }) => {
+const DishDetail = ({ dish, comments, addComment }) => {
     return (
         <div className="container">
             <div className="row">
@@ -163,7 +166,7 @@ const DishDetail = ({ dish, comments }) => {
                 </div>
             </div>
             <div className="row">
-                <RenderDish dish={dish} comments={comments} />
+                <RenderDish dish={dish} comments={comments} addComment={addComment} dishId={dish.id} />
             </div>
         </div>
 
