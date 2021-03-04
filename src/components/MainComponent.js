@@ -31,10 +31,6 @@ const mapDispatchToProps = (dispatch) => ({
     fetchLeaders: () => { dispatch(fetchLeaders()) }
 });
 class Main extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         this.props.fetchDishes();
         this.props.fetchComments();
